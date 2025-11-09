@@ -1,11 +1,22 @@
 require("dotenv").config();
-
+const mongoose = require("mongoose");
 const express = require("express");
-const app = express();
+const eventsRoute = require("../routes/events");
 
 const port = process.env.port || 7000;
+const LINK = process.env.DB_link;
 
-const eventsRoute = require("../routes/events");
+const app = express();
+
+mongoose
+  .connect(LINK)
+  .then(() => {
+    console.log("Database Connected");
+  })
+  .catch((err) => {
+    console.log("Database Down");
+    console.log(err);
+  });
 
 app.use("/api/v1/events", eventsRoute);
 
@@ -17,7 +28,7 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("server is running");
+  console.log("Server is running");
 });
 
 module.exports = app;

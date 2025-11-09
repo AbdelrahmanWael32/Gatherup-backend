@@ -24,22 +24,50 @@ const fake_events = [
     location: "Cairo Festival City Amphitheater – New Cairo",
   },
 ];
+const Event = require("../model/event");
 
 const get_all_events = (req, res) => {
   res.status(200).json({
+    status: 200,
     message: "sucess",
     data: fake_events,
   });
 };
 
-const get_single_event = (req, res) => {
+const add_event = (req, res) => {
+  console.log(req);
+
   res.status(200).json({
-    message: "sucess",
-    data: "1 event",
+    status: 200,
+    message: "Event Added",
+    data: fake_events,
   });
+};
+
+const get_single_event = (req, res) => {
+  const { id: req_id } = req.params;
+  const data = fake_events.find((e) => {
+    const { id } = e;
+    return id == req_id && e;
+  });
+
+  if (data) {
+    res.status(200).json({
+      status: 200,
+      message: "Event found",
+      data: data,
+    });
+  } else {
+    res.status(400).json({
+      status: 400,
+      message: "Event doesnt exist",
+      data: null,
+    });
+  }
 };
 
 module.exports = {
   get_all_events,
   get_single_event,
+  add_event,
 };
