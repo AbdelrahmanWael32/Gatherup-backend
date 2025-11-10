@@ -7,6 +7,7 @@ const port = 7000;
 const LINK = process.env.DB_link;
 
 const app = express();
+app.use(express.json());
 
 mongoose
   .connect(LINK)
