@@ -59,15 +59,6 @@ const get_single_event = async (req, res) => {
       createdAt: 0,
       updatedAt: 0,
     });
-
-    if (!event) {
-      return res.status(404).json({
-        status: 404,
-        message: "Event not found",
-        data: null,
-      });
-    }
-
     res.status(200).json({
       status: 200,
       message: "Event found",
