@@ -21,6 +21,12 @@ mongoose
 
 app.use("/api/v1/events", eventsRoute);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to home",
+  });
+});
+
 app.use((req, res) => {
   res.status(400).json({
     message: "invalid route",
