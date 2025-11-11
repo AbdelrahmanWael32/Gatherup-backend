@@ -15,6 +15,5 @@ router.get("/:id", get_single_event);
 
 router.delete("/:id", delete_event);
 
-router.post("/", add_event);
 router.post("/", userRoleAuth, add_event);
 module.exports = router;
