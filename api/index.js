@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const eventsRoute = require("../routes/events");
 
-const port = 7000;
+const port = process.env.PORT || 7000;
 const LINK = process.env.DB_link;
 
 const app = express();
