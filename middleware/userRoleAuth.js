@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const userRoleAuth = async (req, res, next) => {
   const token = req.headers.authorization;
@@ -17,6 +18,10 @@ const userRoleAuth = async (req, res, next) => {
     req.user = decoded;
 
     if (role == "admin") {
+      //to make add event function work
+      const { event } = req.body;
+      req.body = event;
+
       return next();
     } else {
       return res.status(401).json({
