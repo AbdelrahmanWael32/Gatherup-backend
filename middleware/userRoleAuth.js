@@ -1,41 +1,34 @@
-/*
-req incoming should be = {
-    userId:{
-        //user id
-    }
-    event:{
-        //added evenet details
-    }
-}
-*/
-
-const User = require("../model/user");
+const jwt = require("jsonwebtoken");
 
 const userRoleAuth = async (req, res, next) => {
-  const {
-    user: { role },
-    event,
-  } = req.body;
+  const token = req.headers.authorization;
 
-  //   const {
-  //     userId,
-  //     event,
-  //   } = req.body;
-  //   const user = await User.findById(id);
-  //   const { role } = user;
-  //   if (!user) {
-  //     return res.status(200).json({
-  //       message: "user not found",
-  //       data: null,
-  //     });
-  //   }
+  if (!token) {
+    return res.status(401).json({
+      status: 401,
+      message: "no token",
+      data: null,
+    });
+  }
 
-  if (role == "admin") {
-    req.body = event;
-    next();
-  } else {
-    res.status(200).json({
-      message: "not allowed",
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const { role } = decoded;
+    req.user = decoded;
+
+    if (role == "admin") {
+      return next();
+    } else {
+      return res.status(401).json({
+        status: 401,
+        message: "access denied",
+        data: null,
+      });
+    }
+  } catch (error) {
+    return res.status(401).json({
+      status: 401,
+      message: error,
       data: null,
     });
   }
