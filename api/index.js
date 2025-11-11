@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const express = require("express");
 const eventsRoute = require("../routes/events");
 
-const port = process.env.port || 7000;
+const port = 7000;
 const LINK = process.env.DB_link;
 
 const app = express();
+app.use(express.json());
 
 mongoose
   .connect(LINK)
@@ -19,6 +20,12 @@ mongoose
   });
 
 app.use("/api/v1/events", eventsRoute);
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to home",
+  });
+});
 
 app.use((req, res) => {
   res.status(400).json({
