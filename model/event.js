@@ -1,22 +1,12 @@
 const mongoose = require("mongoose");
 const { type } = require("os");
 
-const ticketCategorySchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  details: {
-    type: String,
-  },
-});
-
 const eventModel = new mongoose.Schema(
   {
+    image: {
+      required: true,
+      type: String,
+    },
     title: {
       required: true,
       unique: true,
@@ -39,7 +29,21 @@ const eventModel = new mongoose.Schema(
       type: String,
     },
     ticketCategories: {
-      type: [ticketCategorySchema],
+      type: [
+        {
+          type: {
+            type: String,
+            required: true,
+          },
+          price: {
+            type: Number,
+            required: true,
+          },
+          details: {
+            type: String,
+          },
+        },
+      ],
       required: true,
     },
   },
