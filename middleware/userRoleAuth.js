@@ -1,6 +1,6 @@
 /*
 req incoming should be = {
-    user:{
+    userId:{
         //user id
     }
     event:{
@@ -9,17 +9,26 @@ req incoming should be = {
 }
 */
 
-function userRoleAuth(req, res, next) {
+const User = require("../model/user");
+
+const userRoleAuth = async (req, res, next) => {
   const {
     user: { role },
     event,
   } = req.body;
 
   //   const {
-  //     user: { id },
+  //     userId,
   //     event,
   //   } = req.body;
   //   const user = await User.findById(id);
+  //   const { role } = user;
+  //   if (!user) {
+  //     return res.status(200).json({
+  //       message: "user not found",
+  //       data: null,
+  //     });
+  //   }
 
   if (role == "admin") {
     req.body = event;
@@ -30,6 +39,6 @@ function userRoleAuth(req, res, next) {
       data: null,
     });
   }
-}
+};
 
 module.exports = userRoleAuth;
