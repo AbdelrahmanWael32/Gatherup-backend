@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { type } = require("os");
 
 const ticketCategorySchema = new mongoose.Schema({
   type: {
@@ -35,6 +34,10 @@ const eventModel = new mongoose.Schema(
       type: String,
     },
     location: {
+      required: true,
+      type: String,
+    },
+    image: {
       required: true,
       type: String,
     },
