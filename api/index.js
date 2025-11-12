@@ -2,11 +2,14 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 const eventsRoute = require("../routes/events");
+const authRoute = require("../routes/auth");
 
 const port = process.env.port || 7000;
 const LINK = process.env.DB_link;
 
 const app = express();
+
+app.use(express.json());
 
 mongoose
   .connect(LINK)
@@ -19,6 +22,7 @@ mongoose
   });
 
 app.use("/api/v1/events", eventsRoute);
+app.use("/api/v1/auth", authRoute);
 
 app.use((req, res) => {
   res.status(400).json({
@@ -28,7 +32,7 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server is running");
+  console.log("Server is running on port" + port);
 });
 
 module.exports = app;
