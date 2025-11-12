@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 
 const eventModel = new mongoose.Schema(
   {
-    image: {
-      required: true,
-      type: String,
-    },
+    // image: {
+    //   required: true,
+    //   type: String,
+    // },
     title: {
       required: true,
       unique: true,
@@ -24,10 +24,6 @@ const eventModel = new mongoose.Schema(
       type: String,
     },
     location: {
-      required: true,
-      type: String,
-    },
-    image: {
       required: true,
       type: String,
     },
