@@ -13,8 +13,9 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-    methods: ["Get", "POST", "put", "DELETE"],
-    CredentialS: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(cors());
