@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
 const eventsRoute = require("../routes/events");
 const authRoute = require("../routes/auth");
 
@@ -8,6 +9,16 @@ const port = process.env.PORT || 7000;
 const LINK = process.env.DB_link;
 
 const app = express();
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["Get", "POST", "put", "Delete"],
+    CredentialS: true,
+  })
+);
+app.use(cors());
 app.use(express.json());
 
 mongoose
