@@ -38,7 +38,7 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, phonenumber, password, city } = req.body;
 
   try {
     const hashed_password = await bcrypt.hash(password, 10);
@@ -46,7 +46,9 @@ const register = async (req, res) => {
     const new_user = new user({
       name,
       email,
+      phonenumber,
       password: hashed_password,
+      city,
     });
 
     await new_user.save();
@@ -97,4 +99,25 @@ const getOneUser = async (req, res) => {
   }
 };
 
-module.exports = { login, register, deleteuser, getOneUser };
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await user.find({}, { password: 0, __v: 0 });
+
+    if (!allUsers || allUsers.length === 0) {
+      return res.status(404).json({
+        message: "No users found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Here are all users",
+      data: allUsers,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+module.exports = { login, register, deleteuser, getOneUser, getAllUsers };

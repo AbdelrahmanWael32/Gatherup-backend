@@ -11,7 +11,18 @@ const userModel = new mongoose.Schema(
       type: String,
       unique: [true, "user already exist ,try to login"],
     },
+
+    phonenumber: {
+      required: true,
+      type: Number,
+    },
+
     password: {
+      required: true,
+      type: String,
+    },
+
+    city: {
       required: true,
       type: String,
     },
