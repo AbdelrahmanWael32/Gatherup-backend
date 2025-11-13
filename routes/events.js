@@ -13,7 +13,7 @@ router.get("/", get_all_events);
 
 router.get("/:id", get_single_event);
 
-router.delete("/:id", delete_event);
+router.delete("/:id", userRoleAuth, delete_event);
 
 router.post("/", userRoleAuth, add_event);
 module.exports = router;
