@@ -20,7 +20,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "Incorrect password" });
     }
 
-    const secrete_key = crypto.randomBytes(32).toString("hex");
+    const secrete_key = process.env.SECRET_KEY;
     const token = sign(log_user, secrete_key);
 
     return res.status(200).json({
@@ -87,7 +87,7 @@ const getOneUser = async (req, res) => {
         message: "User not found",
       });
     }
-    const secrete_key = crypto.randomBytes(32).toString("hex");
+    const secrete_key = process.env.SECRET_KEY;
     const token = sign(oneUser, secrete_key);
 
     return res.status(200).json({
