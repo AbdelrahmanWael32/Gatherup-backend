@@ -87,10 +87,15 @@ const getOneUser = async (req, res) => {
         message: "User not found",
       });
     }
+    const secrete_key = crypto.randomBytes(32).toString("hex");
+    const token = sign(oneUser, secrete_key);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "User found",
-      data: oneUser,
+      data: {
+        token,
+        id: oneUser._id,
+      },
     });
   } catch (err) {
     res.status(400).json({
