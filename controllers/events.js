@@ -76,43 +76,8 @@ const get_single_event = async (req, res) => {
 
 
 
-const update_event = async (req, res) => {
-  try {
-    const { id } = req.params;  
-   
-    const updates = req.body;    
-        
-    const updatedEvent = await Event.findByIdAndUpdate(
-      id,
-      { $set: updates },       
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedEvent) {
-      return res.status(400).json({
-        code: 400,
-        message: "Event not found",
-        data: null,
-      });
-    }
-
-    res.status(200).json({
-      code: 200,
-      message: "Event updated successfully",
-      data: updatedEvent,
-    });
-  } catch (err) {
-    console.error("Patch event error:", err);
-    res.status(500).json({
-      code: 500,
-      message: "Server error",
-      data: null,
-    });
-  }
-};
-
 module.exports = {
   get_all_events,
   get_single_event,
-  add_event,update_event
+  add_event
 };

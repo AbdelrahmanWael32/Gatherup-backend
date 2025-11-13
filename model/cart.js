@@ -20,7 +20,6 @@ const cartModel = new mongoose.Schema(
         },
         amount: {
           type: Number,
-          required: true,
           default: 1,
         },
       },
