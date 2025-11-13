@@ -11,9 +11,7 @@ const userRoleAuth = require("../middleware/userRoleAuth");
 const router = express.Router();
 
 router.get("/", get_all_events);
-
 router.get("/:id", get_single_event);
-
 router.post("/", userRoleAuth, add_event);
 router.delete("/:id", delete_event);
 router.patch("/:id", userRoleAuth, update_event);
