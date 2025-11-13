@@ -52,9 +52,9 @@ const add_event = async (req, res) => {
 
 const get_single_event = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id: req_id } = req.params;
 
-    const event = await Event.findById(id, {
+    const event = await Event.findById(req_id, {
       __v: 0,
       createdAt: 0,
       updatedAt: 0,
@@ -99,9 +99,43 @@ const delete_event = async (req, res) => {
   }
 };
 
+const update_event = async (req, res) => {
+  try {
+    const { id } = req.params;  
+   
+    const updates = req.body;    
+        
+    const updatedEvent = await Event.findByIdAndUpdate(
+      id,
+      { $set: updates },       
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(400).json({
+        code: 400,
+        message: "Event not found",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      code: 200,
+      message: "Event updated successfully",
+      data: updatedEvent,
+    });
+  } catch (err) {
+    console.error("update event error:", err);
+    res.status(500).json({
+      code: 500,
+      message: "Server error",
+      data: null,
+    });
+  }
+};
+
 module.exports = {
   get_all_events,
   get_single_event,
-  add_event,
-  delete_event,
+  add_event ,delete_event,update_event
 };

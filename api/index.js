@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const eventsRoute = require("../routes/events");
 const authRoute = require("../routes/auth");
-
+const cartRoute = require("../routes/cart");
 const port = process.env.PORT || 7000;
 const LINK = process.env.DB_link;
 
@@ -32,8 +32,8 @@ mongoose
   });
 
 app.use("/api/v1/events", eventsRoute);
+app.use("/api/v1/cart", cartRoute);
 app.use("/api/v1/auth", authRoute);
-
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to home",
