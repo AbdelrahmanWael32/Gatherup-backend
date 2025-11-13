@@ -74,10 +74,68 @@ const get_single_event = async (req, res) => {
   }
 };
 
+const delete_event = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const deletedEvent = await Event.findByIdAndDelete(id);
+
+    if (!deletedEvent) {
+      return res.status(404).json({
+        message: "Event not found",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      message: "Event deleted successfully",
+      data: deletedEvent,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+const update_event = async (req, res) => {
+  try {
+    const { id } = req.params;  
+   
+    const updates = req.body;    
+        
+    const updatedEvent = await Event.findByIdAndUpdate(
+      id,
+      { $set: updates },       
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEvent) {
+      return res.status(400).json({
+        code: 400,
+        message: "Event not found",
+        data: null,
+      });
+    }
+
+    res.status(200).json({
+      code: 200,
+      message: "Event updated successfully",
+      data: updatedEvent,
+    });
+  } catch (err) {
+    console.error("update event error:", err);
+    res.status(500).json({
+      code: 500,
+      message: "Server error",
+      data: null,
+    });
+  }
+};
 
 module.exports = {
   get_all_events,
   get_single_event,
-  add_event
+  add_event ,delete_event,update_event
 };

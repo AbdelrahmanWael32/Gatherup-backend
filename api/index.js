@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const eventsRoute = require("../routes/events");
 const authRoute = require("../routes/auth");
-const usersRoute =require("../routes/user")
-const cartRoute = require("../routes/cart")
+const cartRoute = require("../routes/cart");
 const port = process.env.PORT || 7000;
 const LINK = process.env.DB_link;
 
@@ -22,8 +21,7 @@ mongoose
   });
 
 app.use("/api/v1/events", eventsRoute);
-app.use("/api/v1/users", usersRoute);
-app.use("/api/v1/cart",cartRoute)
+app.use("/api/v1/cart", cartRoute);
 app.use("/api/v1/auth", authRoute);
 app.get("/", (req, res) => {
   res.status(200).json({
