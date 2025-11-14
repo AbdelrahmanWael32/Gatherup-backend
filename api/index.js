@@ -12,7 +12,7 @@ const app = express();
 
 const allowedURL = [
   "http://localhost:5173",
-  "https://gatherup-three.vercel.app/",
+  "https://gatherup-three.vercel.app",
 ];
 
 app.use(
