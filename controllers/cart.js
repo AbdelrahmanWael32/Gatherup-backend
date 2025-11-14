@@ -64,7 +64,7 @@ const remove_from_cart = async (req, res) => {
     if (!cart) return res.status(400).json({ code :400,
       message: "Cart not found",
     data :null });
-400
+
     const ticket = cart.ticket.find(
       t => t.eventId.toString() === eventId && t.ticketCategory === ticketCategory
     );
