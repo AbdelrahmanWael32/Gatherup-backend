@@ -12,9 +12,9 @@ const get_all_events = async (req, res) => {
 };
 
 const add_event = async (req, res) => {
-  const { title, date, location, ticketCategories } = req.body;
+  const { title, date, location, ticketCategories, image } = req.body;
 
-  if (!title || !date || !location || !ticketCategories) {
+  if (!title || !date || !location || !ticketCategories || !image) {
     return res.status(400).json({
       status: 400,
       message: "all fields requried",
@@ -52,9 +52,9 @@ const add_event = async (req, res) => {
 
 const get_single_event = async (req, res) => {
   try {
-    const { id: req_id } = req.params;
+    const { id } = req.params;
 
-    const event = await Event.findById(req_id, {
+    const event = await Event.findById(id, {
       __v: 0,
       createdAt: 0,
       updatedAt: 0,
@@ -101,13 +101,13 @@ const delete_event = async (req, res) => {
 
 const update_event = async (req, res) => {
   try {
-    const { id } = req.params;  
-   
-    const updates = req.body;    
-        
+    const { id } = req.params;
+
+    const updates = req.body;
+
     const updatedEvent = await Event.findByIdAndUpdate(
       id,
-      { $set: updates },       
+      { $set: updates },
       { new: true, runValidators: true }
     );
 
@@ -137,5 +137,7 @@ const update_event = async (req, res) => {
 module.exports = {
   get_all_events,
   get_single_event,
-  add_event ,delete_event,update_event
+  add_event,
+  delete_event,
+  update_event,
 };
