@@ -10,14 +10,24 @@ const LINK = process.env.DB_link;
 
 const app = express();
 
+const allowedURL = [
+  "http://localhost:5173",
+  "https://gatherup-three.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: (origin, callback) => {
+      if (!origin || allowedURL.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(cors());
 app.use(express.json());
 
