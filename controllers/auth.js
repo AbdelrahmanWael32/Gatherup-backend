@@ -125,4 +125,67 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { login, register, deleteuser, getOneUser, getAllUsers };
+const updateUsers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, phonenumber, password, city } = req.body;
+
+    const existingUser = await user.findById(id);
+    if (!existingUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    if (email && email !== existingUser.email) {
+      const emailExists = await user.findOne({ email });
+      if (emailExists) {
+        return res.status(400).json({
+          message: "Email already exists",
+        });
+      }
+    }
+
+    const updateData = {};
+
+    if (username) updateData.username = username;
+    if (email) updateData.email = email;
+    if (phonenumber) updateData.phonenumber = phonenumber;
+    if (city) updateData.city = city;
+
+    if (password) {
+      const hashed_password = await bcrypt.hash(String(password), 10);
+      updateData.password = hashed_password;
+    }
+
+    const updatedUser = await user
+      .findByIdAndUpdate(id, updateData, {
+        new: true,
+        runValidators: true,
+      })
+      .select({ password: 0, __v: 0 });
+
+    const secrete_key = process.env.SECRET_KEY;
+    const token = sign(updatedUser.toObject(), secrete_key);
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      data: {
+        user: updatedUser,
+        token,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: err.message,
+    });
+  }
+};
+module.exports = {
+  login,
+  register,
+  deleteuser,
+  getOneUser,
+  getAllUsers,
+  updateUsers,
+};
