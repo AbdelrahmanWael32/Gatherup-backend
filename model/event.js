@@ -27,7 +27,7 @@ const eventModel = new mongoose.Schema(
       required: true,
       type: String,
     },
-    eventCatagory: {
+    eventCategory: {
       required: true,
       type: String,
     },
@@ -42,9 +42,9 @@ const eventModel = new mongoose.Schema(
             type: Number,
             required: true,
           },
-          details: {
-            type: String,
-          },
+          // details: {
+          //   type: String,
+          // },
         },
       ],
       required: true,
