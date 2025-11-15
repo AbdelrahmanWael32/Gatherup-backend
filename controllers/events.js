@@ -12,9 +12,17 @@ const get_all_events = async (req, res) => {
 };
 
 const add_event = async (req, res) => {
-  const { title, date, location, ticketCategories, image } = req.body;
+  const { title, date, location, ticketCategories, image, eventCategory } =
+    req.body;
 
-  if (!title || !date || !location || !ticketCategories || !image) {
+  if (
+    !title ||
+    !date ||
+    !location ||
+    !ticketCategories ||
+    !image ||
+    !eventCategory
+  ) {
     return res.status(400).json({
       status: 400,
       message: "all fields requried",
@@ -36,6 +44,7 @@ const add_event = async (req, res) => {
     date,
     location,
     ticketCategories,
+    eventCategory,
     image: req.body.image || "/default.png",
     description: req.body.description || "Event description",
     time: req.body.time || "Not specified",
